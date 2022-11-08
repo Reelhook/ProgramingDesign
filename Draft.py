@@ -22,7 +22,11 @@ def getsynonyms(testWord):
     return synonyms
 
 
-
-testWord=['easy','medium','hard']
+'''
+Things the results from below show be in a Dic() with the key being the word being
+tested
+'''
+# testWord=['easy','medium','hard']
+testWord=['gunner','butt','fuck','jeep','car','gun','cunt']
 for things in testWord:
     getsynonyms(things)
