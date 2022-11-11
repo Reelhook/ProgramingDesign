@@ -1,5 +1,6 @@
 import requests
 import re
+import time
 from bs4 import BeautifulSoup as BS
 
 def getsynonyms(testWord):
@@ -44,3 +45,4 @@ for word in testWord:
     checkTimeStamp(word)
     # getsynonyms(word.strip())
     write2Local(word, date, getsynonyms(word.strip()))
+print(time)
