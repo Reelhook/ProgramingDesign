@@ -34,10 +34,10 @@ Things the results from below show be in a Dic() with the key being the word bei
 tested
 '''
 
-testWord=['cat','cat']
+testWord=['cat','dog']
 # testWord=['gunner','butt','fuck','jeep','car','gun']
 path='./'
-filename='exampleWorking.json'
+filename='testMultipeDic.json'
 data={}
 for word in testWord:
     data['word']= word
