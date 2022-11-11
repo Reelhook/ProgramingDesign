@@ -1,6 +1,7 @@
 import requests
 import re
 import time
+import MyJSONReadWrite as myJS
 from bs4 import BeautifulSoup as BS
 
 def getsynonyms(testWord):
@@ -21,28 +22,30 @@ def getsynonyms(testWord):
     for things in tags:
         synonyms.append(re.sub("/browse/","",things['href']).strip())
 
-    print(synonyms)
+    # print(synonyms)
     return synonyms
-
-def checkLocal(testWord):
-    pass
 
 def checkTimeStamp(testWord):
     pass
 
-def write2Local(testWord,time,results):
-    pass
 
 '''
 Things the results from below show be in a Dic() with the key being the word being
 tested
 '''
-date=11072022
-# testWord=['easy','medium','hard']
-testWord=['gunner','butt','fuck','jeep','car','gun']
+
+testWord=['cat','cat']
+# testWord=['gunner','butt','fuck','jeep','car','gun']
+path='./'
+filename='exampleWorking.json'
+data={}
 for word in testWord:
-    checkLocal(word)
-    checkTimeStamp(word)
-    # getsynonyms(word.strip())
-    write2Local(word, date, getsynonyms(word.strip()))
-print(time)
+    data['word']= word
+    data['synonms']= getsynonyms(word.strip())
+    myJS.writeToJSONFile(path,filename,data)
+    
+
+print(myJS.readFromJSONFile(path,filename))
+
+
+
