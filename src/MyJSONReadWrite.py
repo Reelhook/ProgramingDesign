@@ -1,41 +1,37 @@
 import json
 
-'''example output of list'''
-# # test=[
-#     'auto',
-#     'automobile',
-#     'bus',
-#     'convertible',
-#     'jeep',
-#     'limousine',
-#     'machine',
-#     'motor',
-#     'pickup',
-#     'ride',
-#     'station%20wagon',
-#     'truck',
-#     'van',
-#     'wagon']
-
-
-def writeToJSONFile(path,filename,data):
-    filePathNameExt=path+filename 
-    with open(filePathNameExt,'w') as fp:
-        json.dump(data,fp)
-
 def readFromJSONFile(path,filename):
     filePathNameExt=path+filename 
     with open(filePathNameExt,'r') as fp:
         return json.load(fp)
 
-# path='./'
-# filename='exampleWorking.json'
 
-# data={}
-# data['word']='jeep'
-# data['synonms']=test
-# # print(data)
-
-# writeToJSONFile(path,filename,data)
-# print(readFromJSONFile(path,filename))
+def writeToJSONFile(path,filename,data):
+    filePathNameExt=path+filename 
+    # with open(filePathNameExt,'a') as fp:
+    #     json.dump(data,fp)
+    jsonData = json.dumps(data)
+    with open(filePathNameExt,'a') as f:
+        f.write(jsonData)
     
+
+
+
+
+#  # load json module
+# import json
+
+# # python dictionary with key value pairs
+# dict = {'Python' : '.py', 'C++' : '.cpp', 'Java' : '.java'}
+
+# # create json object from dictionary
+# json = json.dumps(dict)
+
+# # open file for writing, "w" 
+# f = open("dict.json","w")
+
+# # write json object to file
+# f.write(json)
+
+# # close file
+# f.close()   

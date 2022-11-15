@@ -34,12 +34,16 @@ Things the results from below show be in a Dic() with the key being the word bei
 tested
 '''
 
+
+
 testWord=['cat','dog']
 # testWord=['gunner','butt','fuck','jeep','car','gun']
 path='./'
 filename='testMultipeDic.json'
-data={}
+
+myDics=[]
 for word in testWord:
+    data={}
     data['word']= word
     data['synonms']= getsynonyms(word.strip())
     myJS.writeToJSONFile(path,filename,data)
