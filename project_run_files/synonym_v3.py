@@ -14,9 +14,9 @@ class synonym:
 	
 	def load_data(self):
 		try:
-			synonym_file = open('synonym_data.json', 'r')
-			self.synonym_data = collections.defaultdict(list, json.load(synonym_file))
-			synonym_file.close()
+			with open('synonym_data.json', 'r') as synonym_file:
+				self.synonym_data = collections.defaultdict(list, json.load(synonym_file))
+				
 		except Exception:
 			print("(Synonyms Local Data-base not found and will be created.)")
 			self.synonym_data = collections.defaultdict(list)
@@ -39,10 +39,9 @@ class synonym:
 			self.synonym_data[word].append(False)
 		
 		self.synonym_data[word].append(self.today_date + self.exp_period)
-		synonym_file = open('synonym_data.json', 'w')
-		synonym_file.write(json.dumps(self.synonym_data, indent=4, sort_keys=True, default=str))
-		synonym_file.close()
-
+		with open('synonym_data.json', 'w') as synonym_file:
+			synonym_file.write(json.dumps(self.synonym_data, indent=4, sort_keys=True, default=str))
+		
 		return self.synonym_data
 
 	def check_update(self, word):

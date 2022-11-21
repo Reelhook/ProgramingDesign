@@ -1,13 +1,14 @@
 #!/bin/bash
 
 input_file='input.txt'
-i=1
+# i=1
 >output.txt
 echo "Getting synonyms for words from input.txt and exporting to output.txt ..."
+
 while read line; do
-echo $line >> output.txt
-echo $line | ./synonym_v3.py >> output.txt
-echo -e "\n" >> output.txt
-i=$((i+1))
+    echo $line >> output.txt
+    echo $line | ./synonym_v3.py >> output.txt
+    echo -e "\n" >> output.txt
+    # i=$((i+1))
 done < $input_file
 
