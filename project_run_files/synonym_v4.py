@@ -20,10 +20,13 @@ class synonym:
 		except Exception:
 			print("(Synonyms Local Data-base not found and will be created.)")
 			self.synonym_data = collections.defaultdict(list)
-
-		return self.synonym_data
-		
-	def get_thesaurus(self, word):
+	
+	def save_data(self, data):
+		synonym_file = open('synonym_data.json', 'w')
+		synonym_file.write(json.dumps(data, indent=4, sort_keys=True, default=str))
+		synonym_file.close()
+	
+	def get_thesaurus(self, word, autosave=True):
 		self.synonym_data[word] = []
 		url = 'https://www.thesaurus.com/browse/' + word
 		response = requests.get(url)
@@ -39,39 +42,35 @@ class synonym:
 			self.synonym_data[word].append(False)
 		
 		self.synonym_data[word].append(self.today_date + self.exp_period)
-		synonym_file = open('synonym_data.json', 'w')
-		synonym_file.write(json.dumps(self.synonym_data, indent=4, sort_keys=True, default=str))
-		synonym_file.close()
+		
+		if autosave:
+			self.save_data(data=self.synonym_data)
 
-		return self.synonym_data
-
-	def check_update(self, word):
+	def check_update(self, word, autosave=True):
 		word_exp_date = datetime.datetime.strptime(self.synonym_data[word][1], '%Y-%m-%d')
 
 		if word_exp_date.date() > self.today_date:
 			print("File has not yet expired.")
 		else:
 			print("File has EXPIRED, updating...")
-			self.get_thesaurus(word)
+			self.get_thesaurus(word, autosave)
 			print("File has been updated.")
-		
-		return self.synonym_data
 
 if __name__ == '__main__':
     my_synonyms = synonym()
-    synonym_data = my_synonyms.load_data()
+    my_synonyms.load_data()
     user_input = input()
     
     for word in user_input.split():
-        if word in synonym_data.keys():
+        if word in my_synonyms.synonym_data.keys():
             print("(word found in local data.)")
-            synonym_data = my_synonyms.check_update(word)
+            my_synonyms.check_update(word)
         else:
             print("(word not found in local data, obtaining from Thesaurus.)")
-            synonym_data = my_synonyms.get_thesaurus(word)
-            
-        word_synonyms = synonym_data[word][0]
-        word_expiration = synonym_data[word][1]
+            my_synonyms.get_thesaurus(word)
+     
+        word_synonyms = my_synonyms.synonym_data[word][0]
+        word_expiration = my_synonyms.synonym_data[word][1]
         
         if word_synonyms != False:
             print("Synonyms: " + ', '.join(word_synonyms) + ".")
